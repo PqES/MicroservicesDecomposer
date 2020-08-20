@@ -1,6 +1,6 @@
 # MicroservicesDecomposer
 
-A proposta da abordagem para decompor sistemasmonolíticos em microsserviços tem o seguinte fluxo:
+A proposta da abordagem para decompor sistemas monolíticos em microsserviços tem o seguinte fluxo:
 
 1- Execução da ferramenta IdentificadorEstatico, para obtenção do dados estaticamente.
 
