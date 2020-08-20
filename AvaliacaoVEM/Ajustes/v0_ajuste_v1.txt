@@ -1,0 +1,1 @@
+#não foram feitos ajustes, apenas executou o algoritmo que faz a divisão em microsserviços
