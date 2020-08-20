@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+	<div class="topnav">
+	  <a href="/../">Home</a>
+	  <a class="active" href="/projeto/novo">Cadastro Projeto</a>
+	  <a href="/projeto/listar">Lista Projeto</a>
+	</div>
+	
+	<div class="starter-template" >
+    	<div class="align-left-template" >
+			<form enctype="multipart/form-data" method="post" action="/microsservicos/editar"
+				th:object="${microsservico}" style="width: 500px !important;" >
+	    		<div th:if="${mensagem != null}">
+					<div th:if="${erro}">
+						<span th:text="${mensagem}" style="color: red" ></span>
+					</div>
+					<div th:unless="${erro}">
+						<span th:text="${mensagem}" style="color: blue" ></span>
+					</div>
+				</div>
+
+				<h1>
+					<span>Microsserviço:</span>
+				</h1>
+				
+				<input name="id" th:field="*{id}" type="hidden" />
+				<span>Nome:</span>
+				<br/>
+				<input name="nome" th:field="*{nome}" />
+				<br/><br/>
+				
+				<span>Status:</span>
+				<br/>
+				<select th:field="*{finalizado}">
+				    <option th:value="'true'" th:text="'Finalizado'"></option>
+				    <option th:value="'false'" th:text="'Em análise'"></option>
+				</select>
+				<br/><br/>
+				
+		        <button style="float: right; font-size: 14px;" type="submit">Ajustar microsserviço</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

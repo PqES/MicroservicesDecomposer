@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+	<div class="topnav">
+	  <a href="/../">Home</a>
+	  <a class="active" href="/projeto/novo">Cadastro Projeto</a>
+	  <a href="/projeto/listar">Lista Projeto</a>
+	</div>
+	
+	<div class="starter-template" >
+    	<div class="align-left-template" >
+			<form enctype="multipart/form-data" method="post" th:object="${projeto}" style="width: 500px !important;" >
+	    		<div th:if="${mensagem != null}">
+					<div th:if="${erro}">
+						<span th:text="${mensagem}" style="color: red" ></span>
+					</div>
+					<div th:unless="${erro}">
+						<span th:text="${mensagem}" style="color: blue" ></span>
+					</div>
+				</div>
+
+				<h1>
+					<span th:if="${projeto.id == null}">Cadastro de projeto:</span>
+					<span th:if="${projeto.id != null}">Edição de projeto:</span>
+				</h1>
+				<input name="id" th:field="*{id}" type="hidden" />
+				<span>Nome do projeto:</span>
+				<br/>
+				<input name="nome" th:field="*{nome}" />
+				<br/><br/>
+				
+				<span th:if="${projeto.id == null}" >Upload classes:</span>
+				<br th:if="${projeto.id == null}" />
+				<input th:if="${projeto.id == null}" type="file" name="classe" accept=".txt" />
+				<input th:if="${projeto.id != null}" type="hidden" name="classe" />
+				
+				<br th:if="${projeto.id == null}" /><br th:if="${projeto.id == null}" />
+				
+				<span th:if="${projeto.id == null}" >Upload comunicações:</span>
+				<br th:if="${projeto.id == null}" />
+				<input th:if="${projeto.id == null}" type="file" name="comunicacoes" accept=".txt" />
+				<input th:if="${projeto.id != null}" type="hidden" name="comunicacoes" />
+				
+				<br th:if="${projeto.id == null}" /><br th:if="${projeto.id == null}" />
+				
+				<button th:if="${projeto.id == null}" style="float: right; font-size: 14px;" 
+					formaction="/projeto/salvar" type="submit" >Criar projeto</button>
+		        
+		        <button th:if="${projeto.id != null}" style="float: right; font-size: 14px;" 
+		        	formaction="/projeto/alterar" type="submit">Alterar projeto</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

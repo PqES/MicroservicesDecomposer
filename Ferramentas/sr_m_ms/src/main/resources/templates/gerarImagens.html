@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    
+    <script>
+    	
+		function atualizarAgrupadoMS(el) {
+			var x = el.value;
+			
+			if (x == "true") {
+				document.getElementById('finalizado').style.display = 'block';
+			} else {
+			  document.getElementById('finalizado').style.display = 'none';
+			}	
+			document.getElementById('exibeFinalizado').value = 'false';
+			atualizarFinalizado(document.getElementById('exibeFinalizado'));
+		}
+		
+		function atualizarFinalizado(el) {
+			var x = el.value;
+			
+			if (x == "true") {
+				document.getElementById('aberto').style.display = 'block';
+			} else {
+			  document.getElementById('aberto').style.display = 'none';
+			}
+		}
+		
+	</script>
+	
+	
+</head>
+
+<body onload="atualizarAgrupadoMS(document.getElementById('agrupadoMS'))" >
+
+	<div class="topnav">
+	  <a href="/../">Home</a>
+	  <a href="/projeto/novo">Cadastro Projeto</a>
+	  <a href="/projeto/listar">Lista Projeto</a>
+	  <a class="active" href="#">Gerar Resultados</a>
+	</div>
+	
+	<div class="starter-template" >
+	
+		<div class="align-left-template">
+		
+			<form action="/resultado/gerarImagem" method="post" th:object="${filtro}" style="width: 500px !important;" >
+			
+		    	<div th:if="${mensagem != null}">
+					<div th:if="${erro}">
+						<span th:text="${mensagem}" style="color: red" ></span>
+					</div>
+					<div th:unless="${erro}">
+						<span th:text="${mensagem}" style="color: blue" ></span>
+					</div>
+				</div>
+				
+				<input name="idVersao" th:field="*{idVersao}" type="hidden" />
+				<input name="idProjeto" th:field="*{idProjeto}" type="hidden" />
+				
+				<h3>
+					<span th:text="'Versão ' + *{codigoVersao}"></span>
+					<span th:if="*{codigoVersao == '1.0'}" th:text="' - Sistema monolítico (original)'"></span>
+				</h3>
+				
+				<span>Exibe entidades e classes utilitárias: </span>
+				<select th:field="*{exibeEntidadeUtil}">
+				    <option th:value="'true'" th:text="Sim"></option>
+				    <option th:value="'false'" th:text="Não"></option>
+				</select>
+				<br/><br/>
+				
+				<span>Exibe comunicações fracas: </span>
+				<select th:field="*{exibeLigacoesFracas}">
+				    <option th:value="'true'" th:text="Sim"></option>
+				    <option th:value="'false'" th:text="Não"></option>
+				</select>
+				<br/><br/>
+				
+				<div th:if="*{codigoVersao != '1.0'}">
+					<span>Exibir por grupos sugeridos de microsserviços: </span>
+					<select id="agrupadoMS" th:field="*{agrupadoPorMicrosservicos}" onchange="atualizarAgrupadoMS(this)" >
+					    <option th:value="'true'" th:text="Sim"></option>
+					    <option th:value="'false'" th:text="Não"></option>
+					</select>
+					<br/><br/>
+					
+					<div id="finalizado" >
+						<span>Exibir microsserviços finalizados: </span>
+						<select id="exibeFinalizado" th:field="*{exibeMicrosservicoFinalizado}" onchange="atualizarFinalizado(this)" >
+						    <option th:value="'false'" th:text="Não"></option>
+						    <option th:value="'true'" th:text="Sim"></option>
+						</select>
+						<br/><br/>
+					</div>
+					
+					<div id="aberto" >
+						<span>Exibir microsserviços finalizados aberto: </span>
+						<select th:field="*{exibeMicrosservicoAberto}">
+						    <option th:value="'true'" th:text="Sim"></option>
+						    <option th:value="'false'" th:text="Não"></option>
+						</select>
+						<br/><br/>
+					</div>
+				</div>
+				
+				
+				<button type="submit" formaction="/resultado/gerarImagem" style="float: right; font-size: 14px;">
+		        	Gerar imagem
+		        </button>
+			</form>
+		</div>
+		<br/><br/><br/>
+	<!-- <div style="max-width: 100%; margin: auto;">
+		<form>
+			<div  >
+			   <img id="image" th:src="@{/imagens/resultado.png}" onclick="viewer.show()"
+			   		alt="" title="Just an image (#1)" />
+			</div>
+		</form>
+	</div> -->
+	</div>
+</body>
+</html>

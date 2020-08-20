@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+	<div class="topnav">
+	  <a href="/../">Home</a>
+	  <a href="/projeto/novo">Cadastro Projeto</a>
+	  <a class="active" href="/projeto/listar">Lista Projeto</a>
+	</div>
+	
+	<div class="starter-template" >
+		<div class="align-left-template">
+			<form method="post">
+		    	<div th:if="${mensagem != null}">
+					<div th:if="${erro}">
+						<span th:text="${mensagem}" style="color: red" ></span>
+					</div>
+					<div th:unless="${erro}">
+						<span th:text="${mensagem}" style="color: blue" ></span>
+					</div>
+				</div>
+				
+		        <h1><span>Lista de projetos:</span></h1>
+		        <hr>
+		        <span th:if="${projetos == null || projetos.empty}" >Sem projetos cadastrados</span>
+			                    	
+		        <div th:each="projeto : ${projetos}" class="col s12 l4">
+		            <div class="card">
+		                <div class="card-content">
+		                    <div class="card-title" >
+		                    	<span th:text="'Projeto '+ ${projeto.nome} + ' - '"></span>
+		                        <a th:href="@{'/projeto/buscar/' + ${projeto.id}}" >Editar projeto</a>
+		                    	<span> - </span>
+		                        <a th:href="@{'/projeto/excluir/' + ${projeto.id}}" >Excluir projeto</a>
+		                        <br/><br/>
+		                        <div th:each="versao : ${projeto.versoes}" class="col s12 l4">
+		                        
+		                        	<span th:text="'Versão '+ ${versao.codigoCompleto} + ' - '"></span>
+			                        <a th:href="@{'/resultado/novo/' + ${versao.id} + '/' + ${projeto.id}}" >Gerar resultados</a>
+			                        
+			                    	<span> - </span>
+			                        <a th:href="@{'/versaoProjeto/nova/' + ${versao.id}}" >Gerar nova versão</a>
+			                        
+			                    	<span> - </span>
+			                        <a th:href="@{'/microsservicos/listar/' + ${versao.id}}" >Ajustar microsserviços</a>
+			                        
+			                        <span> - </span>
+			                        <a th:href="@{'/metricas/classe/' + ${versao.id}}" >Métricas classe</a>
+			                        
+			                        <!-- <span> - </span>
+			                        <a th:href="@{'/metricas/microsservico/' + ${versao.id}}" >Métricas microsservico</a>
+			                        
+			                        <span th:if="${versao.versaoBase != null}" > - </span>
+			                        <a th:if="${versao.versaoBase != null}" th:href="@{'/versaoProjeto/excluir/'+${projeto.id}+'/'+${versao.id}}" >Excluir versão</a>
+			                    	 -->
+			                    	<br/>
+			                    </div>
+			                	<hr>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

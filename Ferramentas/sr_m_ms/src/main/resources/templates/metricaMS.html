@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+	<script>
+    	
+		function formatar(id) {
+			var el = document.getElementById(id)
+			var x = el.value;
+			
+			alert(x);
+			
+			document.getElementById(id).value = x.toFixed(2);
+		}
+		
+	</script>
+
+</head>
+
+<body>
+	<div class="topnav">
+	  <a href="/../">Home</a>
+	  <a href="/projeto/novo">Cadastro Projeto</a>
+	  <a href="/projeto/listar">Lista Projeto</a>
+	  <a class="active" href="#">Métrica</a>
+	</div>
+	
+	<div class="starter-template" >
+		<div class="align-left-template">
+			<form method="post">
+		    	<div th:if="${mensagem != null}">
+					<div th:if="${erro}">
+						<span th:text="${mensagem}" style="color: red" ></span>
+					</div>
+					<div th:unless="${erro}">
+						<span th:text="${mensagem}" style="color: blue" ></span>
+					</div>
+				</div>
+				
+		        <h1><span th:text="'Versão ' +${codigo}"></span></h1>
+		        <hr />
+		        <div th:if="${microsservicos != null}" style="background-color: #f2f2f2; font-size: 18px;">
+		        	<br/>
+		        	<span>Referências do sistema monolítico: </span>
+		        	<span>CBO: </span><b><span th:text="' ' + ${cboMonoliticoGeral}"></span></b>
+		        	<span> - RFC: </span><b><span th:text="' ' + ${rfcMonoliticoGeral}"></span></b>
+		        	<span> - LCOM4: </span><b><span th:text="' ' + ${lcomMonoliticoGeral} "></span></b><br/>
+		        	<br/>
+		        </div>
+		        
+		        <div th:if="${codigoAnterior != null}" style="background-color: #f2f2f2; font-size: 18px;">
+		        	<span th:text="'Referências da versão ' + ${codigoAnterior} + ': '"></span>
+		        	<span>CBO: </span><b><span th:text="' ' + ${cboMicrosservicoAnterior}"></span></b>
+		        	<span> - RFC: </span><b><span th:text="' ' + ${rfcMicrosservicoAnterior}"></span></b>
+		        	<span> - LCOM4: </span><b><span th:text="' ' + ${lcom4MicrosservicoAnterior} "></span></b><br/>
+		        	<br/>
+		        </div>
+		        
+		        <hr />
+		        <div th:if="${microsservicos == null || microsservicos.empty}">
+		        	<span>Sem projetos cadastrados</span>
+			   </div>                 	
+			     
+			    <table >
+			    	<!-- <col></col>
+					<colgroup span="2"></colgroup>
+					<colgroup span="2"></colgroup>
+					<colgroup span="2"></colgroup> -->
+		    		<!-- <tr>
+		    			<th rowspan="2" >Microsserviços</th>
+		    			<th colspan="3" scope="colgroup" >Microssserviço</th>
+		    			<th colspan="3" scope="colgroup" >Classes equivalentes no monolítico</th>
+		    		</tr> -->
+		    		<tr>
+		    			<th scope="col" >Microsserviços</th>
+		    			<th scope="col">CBO</th>
+		    			<th scope="col">RFC</th>
+		    			<th scope="col">LCOM</th>
+		    			
+		    	<!-- 		<th scope="col">CBO</th>
+		    			<th scope="col">RFC</th>
+		    			<th scope="col">LCOM</th> -->
+		    		</tr>
+			    	<tr th:each="mic : ${microsservicos}" > 
+			    		<td>
+			    			<span th:text="${mic.nome}"></span>
+			    		</td>
+			    		
+			    		<td th:style="${ (mic.cbo() <= cboMonoliticoGeral)
+    						? 'background-color: green; color: white;text-align: right;' : 'background-color: red; color: white;text-align: right;'}">
+			    			<span th:text="${mic.cbo()}"></span>
+			    		</td>
+			    		<td th:style="${ (mic.rfc() <= rfcMonoliticoGeral)
+    						? 'background-color: green; color: white;text-align: right;' : 'background-color: red; color: white;text-align: right;'}">
+			    			<span th:text="${mic.rfc()}"></span>
+			    		</td>
+			    		<td></td>
+			    		<!-- 
+			    		<td th:style="${ ( mic.cboMonolitico() <= mic.cbo() && mic.cboMonolitico() <= cboMonoliticoGeral)
+    						? 'background-color: green; color: white;text-align: right;' : 'text-align: right;'}" >
+			    			<span th:text="${mic.cboMonolitico()}"></span>
+			    		</td>
+			    		<td th:style="${ ( mic.rfcMonolitico() <= mic.rfc() && mic.rfcMonolitico() <= rfcMonoliticoGeral)
+    						? 'background-color: green; color: white;text-align: right;' : 'text-align: right;'}" >
+			    			<span th:text="${mic.rfcMonolitico()}"></span>
+			    		</td>
+			    		<td></td> -->
+			    	</tr>
+			    	
+			    	<tr><td colspan="4"></td></tr>
+			    	
+			    	<tr>
+		    			<th>
+			    			<span>Média</span>
+			    		</th>
+			    		
+			    		<th th:style="${cboMicrosservicoGeral <= cboMonoliticoGeral
+			    				? 'background-color: green; color: white;' : 'background-color: red; color: white;'}">
+			    			<span th:text="${cboMicrosservicoGeral}"></span>
+			    		</th>
+			    		<th th:style="${rfcMicrosservicoGeral <= rfcMonoliticoGeral
+			    				? 'background-color: green; color: white;' : 'background-color: red; color: white;'}">
+			    			<span th:text="${rfcMicrosservicoGeral}"></span>
+			    		</th>
+			    		<th>
+			    			<span></span>
+			    		</th>
+			    		<!-- 
+			    		<th th:style="${cboMicrosservicoGeral >= cboMonoliticoGeral
+			    		    				? 'background-color: green; color: white;' : ''}">
+			    			<span th:text="${cboMonoliticoEquiv}"></span>
+			    		</th>
+			    		<th th:style="${rfcMicrosservicoGeral >= rfcMonoliticoGeral
+			    		    				? 'background-color: green; color: white;' : ''}">
+			    			<span th:text="${rfcMonoliticoEquiv}"></span>
+			    		</th>
+			    		
+			    		<th></th> -->
+			    		
+		    		</tr>
+			    </table>
+			    <br />
+			</form>
+		</div>
+	</div>
+</body>
+</html>

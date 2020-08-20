@@ -1,0 +1,6 @@
+Plug-in para IDE Eclipse.
+
+Execute como Eclipse Application (plug-in).
+
+Ao ser clicada na ação, disponível na barra de ferramentas,
+Eclipse apresenta todos os métodos daquela classe. 

@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: IdentificadorEstatico
+Bundle-SymbolicName: IdentificadorEstatico;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: br.ufla.felipe.plugin.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources;bundle-version="3.13.0",
+ org.eclipse.jdt.core;bundle-version="3.18.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: IdentificadorEstatico
+Export-Package: br.ufla.felipe.ast,
+ br.ufla.felipe.entidades,
+ br.ufla.felipe.handlers,
+ br.ufla.felipe.plugin,
+ br.ufla.felipe.util
+ 
+ 

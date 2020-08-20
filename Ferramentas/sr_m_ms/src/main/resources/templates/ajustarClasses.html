@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+	
+</head>
+
+<body>
+	<div class="topnav">
+	  <a href="/../">Home</a>
+	  <a href="/projeto/novo">Cadastro Projeto</a>
+	  <a href="/projeto/listar">Lista Projeto</a>
+	  <a class="active" href="#">Nova Versão</a>
+	</div>
+	
+	<div class="starter-template" >
+    	<div class="align-left-template" style="width: 800px !important;" >
+			<form action="/versaoProjeto/criar" enctype="multipart/form-data" method="post" th:object="${filtro}" >
+	    		<div th:if="${mensagem != null}">
+					<div th:if="${erro}">
+						<span th:text="${mensagem}" style="color: red" ></span>
+					</div>
+					<div th:unless="${erro}">
+						<span th:text="${mensagem}" style="color: blue" ></span>
+					</div>
+				</div>
+				<h1>
+					<span th:text="'Ajustes do projeto '+ ${versao.projeto.nome} "></span>
+				</h1>
+				<h2>
+					<span th:text="'Baseado na versão '+ ${versao.codigoCompleto} "></span>
+				</h2>
+				
+				<input name="idVersaoBase" th:value="*{idVersaoBase}" type="hidden" />
+				
+				<span >Upload ajustes classes:</span>
+				<br />
+				<input type="file" name="ajustesClasses" accept=".txt" />
+				<br /><br />
+				
+				<span >Upload ajustes comunicações:</span>
+				<br />
+				<input type="file" name="ajustesComunicacoes" accept=".txt" />
+				<br /><br />
+				
+				<span>Permite split classes:</span>
+				<br/>
+				<select th:field="*{realizaSplitClass}" >
+				    <option th:value="'true'" th:text="'Sim'" th:selected="(${splitClasses} == 'true')"></option>
+				    <option th:value="'false'" th:text="'Não'" th:selected="(${splitClasses} == 'false')" ></option>
+				</select>
+				
+				<br /><br />
+				<span>Mínimo de classes (funcionais) por microsserviços:</span>
+				<br/>
+		        <input name="limiar" th:value="*{limiar}" />
+		        
+				<br/><br/>
+				<button type="submit" style="float: right; font-size: 14px;">
+		        	Criar uma nova versão baseada nos ajustes
+		        </button>
+		        
+		        
+		        <br/><br/>
+		        <table>
+		        	<tr>
+		        		<th style="width:30%">Instrução</th>
+		        		<th style="width:70%">Descrição</th>
+		        	</tr>
+		        	<tr>
+		        		<td colspan="2" style="font-size: large; font-weight: bold;"> Instruções para ajustes de classes</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:entidade</td>
+		        		<td>Transforma a classe em entidade</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:nEntidade</td>
+		        		<td>Transforma a classe em não entidade</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:util</td>
+		        		<td>Transforma a classe em utilitária.</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:nUtil</td>
+		        		<td>Transforma a classe em não utilitária.</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:definitiva</td>
+		        		<td>Indica que a classe é definitiva, não pode ser dividida.</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:nDefinitiva</td>
+		        		<td>Cancela a instrução :definitiva.</td>
+		        	</tr>
+		        	<tr><td colspan="2"></td>
+		        	<tr>
+		        		<td colspan="2" style="font-size: large; font-weight: bold;"> Instruções para ajustes de comunicações</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:X</td>
+		        		<td>Peso da comunicação. Obs: Peso 0 separa</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:obrigatoria</td>
+		        		<td>Torna a junção da comunicação obrigatória em um mesmo microsserviço.</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:nObrigatoria</td>
+		        		<td>Cancela a instrução :obrigatoria</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:definitiva</td>
+		        		<td>Evita a separação dos métodoas da classe origem caso seja definitiva.</td>
+		        	</tr>
+		        	<tr> 
+		        		<td>:nDefinitiva</td>
+		        		<td>nDefinitiva cancela a instrução :definitiva.</td>
+		        	</tr>
+		        </table>
+		        
+			</form>
+		</div>
+	</div>
+</body>
+</html>

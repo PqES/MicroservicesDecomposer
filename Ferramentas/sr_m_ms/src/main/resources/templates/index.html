@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SR_M_MS</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+	<div class="topnav">
+	  <a class="active" href="/../">Home</a>
+	  <a href="/projeto/novo">Cadastro Projeto</a>
+	  <a href="/projeto/listar">Lista Projeto</a>
+	</div>
+	
+	<div class="starter-template" >
+		<div class="align-left-template">
+			<h1><span>Página inicial</span></h1>
+			<div th:if="${mensagem != null}">
+				<div th:if="${erro}">
+					<span th:text="${mensagem}" style="color: red" ></span>
+				</div>
+				<div th:unless="${erro}">
+					<span th:text="${mensagem}" style="color: blue" ></span>
+				</div>
+			</div>
+			
+			
+			<h3>Instruções de uso</h3>
+			
+			<p>Para utilização da aplicação é necessário executar duas ferramentas sobre o sistema a ser analisado.
+				A primeira é um plugin do eclipse que realiza análise estática sobre o código 
+				e a segunda é uma ferramenta de análise dinâmica criada com AspectJ que deverá ser adicionada ao projeto
+				
+			
+			</p>
+		</div>
+	</div>
+</body>
+</html>
